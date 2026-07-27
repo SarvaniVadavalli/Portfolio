@@ -1,0 +1,324 @@
+@import "tailwindcss";
+@config "../tailwind.config.mjs";
+
+:root {
+  /* Color palette - REDESIGN.md Section 2 Cool Gradient System */
+  --color-accent-blue: #0ea5e9;    /* Stop 1 (electric blue) */
+  --color-accent-teal: #14b8a6;    /* Stop 2 (teal) */
+  --color-accent-glow: #e0f2fe;    /* Stop 3 (glow highlight) */
+  --color-accent-deep: #0f766e;    /* Deep Accent for borders/shadows */
+
+  /* Deprecated original amber values (commented out for reference/revert only)
+  --color-amber-core: #e8a94d;
+  --color-amber-light: #f4c878;
+  --color-amber-deep: #b9752e;
+  */
+
+  --color-background: #0a0a0f;
+  --color-foreground: #f5f5f7;
+  --color-muted: #9ca3af;
+  --color-border-default: rgba(156, 163, 175, 0.16);
+  --color-border-active: rgba(20, 184, 166, 0.4);
+  --color-error: #ef4444;
+  --color-card-bg: #111118;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Typography Scale */
+  --text-xs: 12px;
+  --lh-xs: 16px;
+  --text-sm: 14px;
+  --lh-sm: 20px;
+  --text-base: 16px;
+  --lh-base: 24px;
+  --text-lg: 20px;
+  --lh-lg: 28px;
+  --text-xl: 25px;
+  --lh-xl: 32px;
+  --text-2xl: 31px;
+  --lh-2xl: 38px;
+  --text-3xl: 39px;
+  --lh-3xl: 46px;
+  --text-4xl: 49px;
+  --lh-4xl: 56px;
+  --text-5xl: 61px;
+  --lh-5xl: 68px;
+  --text-6xl: 76px;
+  --lh-6xl: 82px;
+  --text-7xl: 95px;
+  --lh-7xl: 100px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Blur */
+  --blur-card-hover: 4px;
+  --blur-modal-backdrop: 8px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+  --glow-accent-sm: 0 0 8px rgba(20, 184, 166, 0.25);
+  /* Deprecated amber glow
+  --glow-amber-sm: 0 0 8px rgba(232, 169, 77, 0.25);
+  */
+
+  /* Opacity */
+  --opacity-disabled: 0.4;
+  --opacity-muted-bg: 0.06;
+  --opacity-muted-bg-active: 0.18;
+  --opacity-overlay: 0.6;
+
+  /* Z-Index */
+  --z-base: 0;
+  --z-neural-canvas: 1;
+  --z-sticky-nav: 100;
+  --z-sound-toggle: 100;
+  --z-modal-backdrop: 200;
+  --z-modal-content: 210;
+  --z-toast: 300;
+
+  /* Animation Spacing */
+  --motion-instant: 100ms;
+  --motion-fast: 200ms;
+  --motion-snap: 400ms;
+  --motion-modal: 250ms;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scroll Reveal Animations */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 600ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 600ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.card-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .card-reveal {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}
+
+/* GitHub loading pulse animation (spec compliant: opacity 0.4 <-> 0.7, 1200ms duration, standard easing) */
+@keyframes github-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.animate-github-loading {
+  animation: github-skeleton-pulse 1200ms cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Premium Editorial Typography Treatment */
+.premium-hero-title {
+  color: var(--color-foreground);
+}
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .premium-hero-title {
+    background-image:
+      linear-gradient(
+        120deg,
+        transparent 40%,
+        rgba(20, 184, 166, 0.16) 48%,
+        rgba(20, 184, 166, 0.28) 50%,
+        rgba(20, 184, 166, 0.16) 52%,
+        transparent 60%
+      ),
+      radial-gradient(
+        circle at 18% 0%,
+        rgba(20, 184, 166, 0.08) 0%,
+        transparent 40%
+      ),
+      linear-gradient(180deg, #f5f5f7 20%, #9ca3af 100%);
+    background-size:
+      200% 100%,
+      100% 100%,
+      100% 100%;
+    background-position:
+      150% 0,
+      0% 0,
+      0% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.animate-teal-sweep {
+  animation: teal-sweep-animation 600ms cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes teal-sweep-animation {
+  0% {
+    background-position:
+      150% 0,
+      0% 0,
+      0% 0;
+  }
+  100% {
+    background-position:
+      -50% 0,
+      0% 0,
+      0% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-teal-sweep {
+    animation: none !important;
+  }
+}
+
+/* Scroll cue slow oscillation: 4px translateY, 1600ms duration, ease-in-out */
+@keyframes scroll-cue-oscillation {
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, 4px);
+  }
+}
+
+.animate-scroll-cue {
+  animation: scroll-cue-oscillation 1600ms cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-scroll-cue {
+    animation: none !important;
+  }
+}
+
+/* Slow pulse animation for Hero status dot */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1.0;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 2000ms ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-slow {
+    animation: none !important;
+  }
+}
+
+/* Interactive headline letter styling */
+.hero-hover-letter {
+  display: inline-block;
+  transition: transform 100ms ease-out, color 100ms ease-out;
+  color: inherit;
+}
+.hero-hover-letter:hover {
+  color: #14B8A6 !important;
+  -webkit-text-fill-color: #14B8A6 !important;
+  transform: translateY(-3px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-hover-letter:hover {
+    transform: none !important;
+  }
+}
+
+/* Redesign Loop: Slow animated gradient shift for surname accent text */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.premium-hero-title-accent {
+  background: linear-gradient(135deg, #0EA5E9, #14B8A6, #E0F2FE, #0EA5E9);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 8s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-hero-title-accent {
+    background: linear-gradient(135deg, #0EA5E9 0%, #14B8A6 100%);
+    background-size: 100% 100%;
+    animation: none;
+  }
+}
+
+
+
+
+
+
